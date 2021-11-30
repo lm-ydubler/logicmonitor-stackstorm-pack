@@ -131,7 +131,6 @@ jobs:
         PACKS_PREFIX: ${{ inputs.pack_repo_prefix }}
       run: |
         pwd
-        echo 3 ${{PACKS_PATH}}
         mkdir -p ${PACKS_PATH}
         cd ${PACKS_PATH}
         pwd
