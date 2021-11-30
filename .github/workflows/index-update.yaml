@@ -131,6 +131,13 @@ jobs:
         PACKS_PREFIX: ${{ inputs.pack_repo_prefix }}
       run: |
         pwd
+        ls
+        cd ..
+        pwd
+        ls
+        cd ..
+        pwd
+        ls
         mkdir -p ${PACKS_PATH}
         cd ${PACKS_PATH}
         pwd
