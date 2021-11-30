@@ -1,7 +1,6 @@
 name: CI - Build and Test
 
 on:
-  push:
   workflow_call:
     inputs:
       apt-cache-version:
