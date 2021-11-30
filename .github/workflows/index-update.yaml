@@ -1,6 +1,7 @@
 name: Index Update
 
 on:
+  push:
   workflow_call:
     inputs:
       force-rebuild-index:
