@@ -134,6 +134,11 @@ jobs:
         echo "::group::Clone ${PACKS_ORG}/${repo_name}"
         gh repo clone "${PACKS_ORG}/${repo_name}"
         # !TODO: checkout the latest tag.
+        
+        latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        echo latestTag=$latestTag
+        git checkout $tag -b latest
+        
         echo "::endgroup::"
         # !TODO: exclude packs without tags
         # !TODO: add index exclusion list to exclude utility packs like
