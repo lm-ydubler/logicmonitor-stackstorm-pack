@@ -59,6 +59,7 @@ jobs:
     - name: Add checkout paths to env context
       shell: bash
       run: |
+        pwd
         echo "CI_DIR=${{ github.workspace }}/ci" >> ${GITHUB_ENV}
         echo "TOOLS_DIR=${{ github.workspace }}/exchange-tools" >> ${GITHUB_ENV}
         echo "ST2_REPO_PATH=${{ github.workspace }}/st2" >> ${GITHUB_ENV}
@@ -70,6 +71,7 @@ jobs:
         GIT_USER_NAME: ${{ inputs.git_user_name }}
         GIT_USER_EMAIL: ${{ inputs.git_user_email }}
       run: |
+        pwd
         git config --global user.name "${GIT_USER_NAME}"
         git config --global user.email "${GIT_USER_EMAIL}"
     - name: Checkout index repo
@@ -128,8 +130,13 @@ jobs:
         PACKS_ORG: ${{ inputs.packs_org }}
         PACKS_PREFIX: ${{ inputs.pack_repo_prefix }}
       run: |
+        pwd
+        echo 1 $PACKS_PATH
+        echo 2 ${PACKS_PATH}
+        echo 3 ${{PACKS_PATH}}
         mkdir -p ${PACKS_PATH}
         cd ${PACKS_PATH}
+        pwd
         source ${TOOLS_DIR}/functions.sh
         for repo_name in $(_gh_list_repo_names ${PACKS_ORG} ${PACKS_PREFIX}); do
         echo "::group::Clone ${PACKS_ORG}/${repo_name}"
