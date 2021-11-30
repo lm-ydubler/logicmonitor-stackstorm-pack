@@ -95,7 +95,7 @@ jobs:
         # https://github.com/StackStorm-Exchange/exchange-tools/pull/3
         # https://github.com/StackStorm-Exchange/exchange-tools/pull/2
         #repository: StackStorm-Exchange/exchange-tools
-        repository: cognifloyd/exchange-tools
+        repository: lm-ydubler/exchange-tools
         ref: ${{ inputs.exchange_tools_branch }}
         path: exchange-tools
         fetch-depth: 1
