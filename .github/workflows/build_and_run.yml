@@ -1,11 +1,30 @@
-name: CI
+name: CI - Build and Test
 
-on: push
+on:
+  workflow_call:
+    inputs:
+      apt-cache-version:
+        required: false
+        type: string
+        default: "v0"
+      py-cache-version:
+        required: false
+        type: string
+        default: "v0"
+      enable-common-libs:
+        description: |
+          When true, use an st2.conf that sets packs.enable_common_libs=true
+          see: https://docs.stackstorm.com/reference/sharing_code_sensors_actions.html
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
-    name: 'Build and Test - Python ${{ matrix.python-version-short }}'
+    # When parent workflow is named "Build and Test" this shows up as:
+    #   "Build and Test / Python 3.6"
+    name: 'Python ${{ matrix.python-version-short }}'
     strategy:
       matrix:
         include:
@@ -14,25 +33,34 @@ jobs:
     steps:
       # eventually replace @gha with @master
       - name: Checkout Pack Repo and CI Repos
-        uses: lm-ydubler/ci/gha/checkout@gha
+        uses: StackStorm-Exchange/ci/.github/actions/checkout@gha
         
-        # TO DO: Add cache step
-
       - name: Install APT Dependencies
-        uses: lm-ydubler/ci/gha/apt-dependencies@gha
+        uses: StackStorm-Exchange/ci/.github/actions/apt-dependencies@gha
         with:
-          cache-version: v0
+          cache-version: ${{ inputs.apt-cache-version }}
 
       - name: Install Python Dependencies
-        uses: lm-ydubler/ci/gha/py-dependencies@gha
+        uses: StackStorm-Exchange/ci/.github/actions/py-dependencies@gha
         with:
-          cache-version: v0
+          cache-version: ${{ inputs.py-cache-version }}
           python-version: ${{ matrix.python-version }}
 
-      # vault pack would add one or more custom test setup steps here
-
       - name: Run pack tests
-        uses: lm-ydubler/ci/gha/test@gha
+        uses: StackStorm-Exchange/ci/.github/actions/test@gha
         with:
-          # This makes the tests use an alternate config that enables shared libs
-          enable-common-libs: true
+          enable-common-libs: ${{ inputs.enable-common-libs }}
+
+    services:
+      mongo:
+        image: mongo:3.4
+        ports:
+          - 27017:27017
+      rabbitmq:
+        image: rabbitmq:3
+        ports:
+          - 5672:5672
+      #redis:
+      #  image: redis
+      #  ports:
+      #    - 6379:6379
