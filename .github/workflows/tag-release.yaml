@@ -1,15 +1,9 @@
-name: Update Index
+name: Release Tags
 
 on:
-  # every 5 minutes
-  #schedule:
-  #  - cron:  '*/5 * * * *'
-  # manual rebuilds
   workflow_dispatch:
 
 jobs:
   update_index:
     name: 'Update Index'
-    uses: lm-ydubler/ci/.github/workflows/index-update.yaml@gha
-    #uses: StackStorm-Exchange/ci/.github/workflows/index-update.yaml@gha
-    #with:
+    uses: lm-ydubler/ci/.github/workflows/pack-tag_release.yaml@gha
