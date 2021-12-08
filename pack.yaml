@@ -6,7 +6,7 @@ keywords:
   - LogicMonitor
   - monitoring
   - alerting
-version: 1.0.8
+version: 1.0.9
 python_versions:
   - "3"
 author: LogicMonitor
